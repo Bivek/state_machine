@@ -627,9 +627,8 @@ module StateMachine
     # of a state or a lambda block which determines the initial state at
     # creation time.
     def initial_state=(new_initial_state)
-      @initial_state = new_initial_state
-      add_states([@initial_state]) unless dynamic_initial_state?
-      
+      @initial_state =  new_initial_state.is_a?(Hash) ? new_initial_state[:name] : new_initial_state
+      add_states([new_initial_state]) unless dynamic_initial_state?
       # Update all states to reflect the new initial state
       states.each {|state| state.initial = (state.name == @initial_state)}
       
@@ -2261,7 +2260,7 @@ module StateMachine
           end
           
           unless state = states[new_state]
-            states << state = State.new(self, new_state)
+            states << state =  new_state.is_a?(Hash) ? State.new(self, new_state[:name], {value: new_state[:value]}) : State.new(self, new_state)
             
             # Copy states over to sibling machines
             sibling_machines.each {|machine| machine.states << state}
