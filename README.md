@@ -8,7 +8,7 @@ A hash with ```  {name: :state_name, value: state_value}  ``` can be passed in i
 
 In previous implementation 
 
-```
+``` ruby
   class Bike
 
     PARKED  = 0
