@@ -1064,3 +1064,24 @@ class TrafficLightCautionTest < Test::Unit::TestCase
     assert_equal true, @light.capture_violations?
   end
 end
+
+class Bike
+
+  PARKED  = 0
+
+  state_machine attribute: :status, :initial => {name: :parked, value: Bike::PARKED} do
+  end
+
+end
+
+class BikeInitializeTest < Test::Unit::TestCase
+
+  def setup
+    @bike = Bike.new
+  end
+
+  def test_should_initialize_with_proper_state
+    assert_equal Bike::PARKED, @bike.status
+  end
+
+end
